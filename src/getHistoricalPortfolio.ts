@@ -11,7 +11,9 @@ const getHistoricalPortfolio = async (chainName: string, walletAddress: string):
     let url = `https://api.covalenthq.com/v1/${chainName}/address/${walletAddress}/portfolio_v2/`
     try {
         const res = await fetch(url, { method: 'GET', headers })
-        console.log(await res.json())
+        const data = await res.json()
+        console.log(data)
+        return data
     }
     catch(err){
         console.log(`Error fetching transaction history`)
