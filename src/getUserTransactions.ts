@@ -7,7 +7,7 @@ const apiKey = process.env.COVALENT_API_KEY as string
 const getUserTransactions = async (userAddress: string, chainId: string): Promise<any> => {
     let headers = new Headers()
     headers.set('Authorization', `Bearer ${apiKey}`)
-    const url = `https://api.covalenthq.com/v1/${chainId}/address/${userAddress}/transactions_v2/?key=${apiKey}`
+    const url = `https://api.covalenthq.com/v1/${chainId}/address/${userAddress}/transactions_v3/?key=${apiKey}`
     try {
         const response = await axios.get(url)
         return response.data.data.items

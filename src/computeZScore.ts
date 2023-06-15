@@ -8,4 +8,13 @@ const userScoringAlgorithm = async () => {
     return score
 }
 
+const getRecencyMultiplier = async (tx: any) => {
+    // get current timestamp
+    // get transaction timestamp
+    // get difference in months
+    // return multiplier
+    const multiplier = 0
+    return multiplier
+}
+
 export { userScoringAlgorithm }
