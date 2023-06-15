@@ -2,14 +2,12 @@ import axios from 'axios'
 import { config } from 'dotenv'
 config()
 
-const API_KEY = process.env.API_KEY as string
-const USER_ADDRESS = process.env.USER_ADDRESS as string
+const apiKey = process.env.COVALENT_API_KEY as string
 
-async function getUserTransactions(userAddress: string): Promise<any> {
-    
-    const apiKey = API_KEY
-    const url = `https://api.covalenthq.com/v1/137/address/${userAddress}/transactions_v2/?key=${apiKey}`
-
+const getUserTransactions = async (userAddress: string, chainId: string): Promise<any> => {
+    let headers = new Headers()
+    headers.set('Authorization', apiKey)
+    const url = `https://api.covalenthq.com/v1/${chainId}/address/${userAddress}/transactions_v2/?key=${apiKey}`
     try {
         const response = await axios.get(url)
         return response.data.data.items
@@ -18,10 +16,4 @@ async function getUserTransactions(userAddress: string): Promise<any> {
     }
 }
 
-getUserTransactions(USER_ADDRESS).then(txs => {
-    console.log(txs)
-}).catch(e => {
-    console.error(e)
-})
-
-// storing user txns on db
+export { getUserTransactions }
