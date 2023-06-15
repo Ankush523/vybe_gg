@@ -12,4 +12,8 @@ app.post('/api/getGenerator', async (req, res) => {
     // const generator = await fetchGenerator()
 })
 
+app.post('/api/userInsights', async (req, res) => {
+
+})
+
 app.listen(port, () => console.log(`Server listening on port: ${port}`))
