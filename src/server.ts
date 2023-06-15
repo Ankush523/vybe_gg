@@ -1,6 +1,7 @@
 import express from 'express'
 import { config} from 'dotenv'
 import { getHistoricalPortfolio } from './getHistoricalPortfolio'
+import { getNftBalances } from './getNftBalances'
 config()
 
 const port = process.env.PORT || 8080
@@ -26,5 +27,10 @@ app.get('/api/fetch/portfolio', async (req, res) => {
     res.json(dailyBalances)
 })
 
+app.get('/api/fetch/nftBalance', async (req, res) => {
+    const { chainName, address } = req.query as { chainName: string, address: string }
+    const nftBalance = await getNftBalances(chainName, address)
+    res.json(nftBalance)
+})
 
 app.listen(port, () => console.log(`Server listening on port: ${port}`))

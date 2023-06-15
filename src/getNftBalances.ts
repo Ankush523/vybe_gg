@@ -8,9 +8,9 @@ const getNftBalances = async (chainName: string, walletAddress: string) => {
     headers.set('Authorization', `Bearer ${apiKey}`)
     let url = `https://api.covalenthq.com/v1/${chainName}/address/${walletAddress}/balances_nft/`
     try {
-        const res = await fetch(url)
-        console.log(await res.json())
-        return (res)
+        const res = await fetch(url, { method: 'GET', headers })
+        const data = await res.json()
+        return (data)
     }
     catch(err){
         return (`Error fetching nfts`)
