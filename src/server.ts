@@ -4,6 +4,7 @@ import { getHistoricalPortfolio } from './getHistoricalPortfolio'
 import { getNftBalances } from './getNftBalances'
 import { getTokenBalances } from './getTokenBalances'
 import cors from 'cors'
+import { getUserTransactions } from './getUserTransactions'
 config()
 
 const port = process.env.PORT || 8080
@@ -61,6 +62,12 @@ app.get('/api/fetch/tokenBalance', async (req, res) => {
     }
 
     res.json({ actualTokens, percentagesArray })
+})
+
+app.get('/api/fetch/transactions', async (req, res) => {
+    const { chainId, address } = req.query as { chainId: string, address: string }
+    const transactions = await getUserTransactions(address, chainId)
+    res.json(transactions)
 })
 
 app.listen(port, () => console.log(`Server listening on port: ${port}`))
