@@ -3,11 +3,15 @@ import { config} from 'dotenv'
 import { getHistoricalPortfolio } from './getHistoricalPortfolio'
 import { getNftBalances } from './getNftBalances'
 import { getTokenBalances } from './getTokenBalances'
+import cors from 'cors'
 config()
 
 const port = process.env.PORT || 8080
 const app = express()
+
+// middleware
 app.use(express.json())
+app.use(cors())
 
 app.get('/api/fetch/portfolio', async (req, res) => {
     // fetch the user's portfolio from the db
@@ -37,7 +41,26 @@ app.get('/api/fetch/nftBalance', async (req, res) => {
 app.get('/api/fetch/tokenBalance', async (req, res) => {
     const { chainName, address } = req.query as { chainName: string, address: string }
     const tokenBalances = await getTokenBalances(chainName, address)
-    res.json(tokenBalances)
+    const actualTokens = tokenBalances.data.items.filter((token: any) => token.type == 'cryptocurrency')
+    
+    let totalValue = 0
+    let percentagesArray = new Array(actualTokens.length)
+
+    for(let i = 0; i < actualTokens.length; i++){
+        totalValue += actualTokens[i].quote
+    }
+
+    const getIndividualTokenPercentages = (token: any) => {
+        const percentage = (token.quote / totalValue) * 100
+        return percentage
+    }
+
+    for(let i = 0; i < actualTokens.length; i++){
+        let tokenPercentage = getIndividualTokenPercentages(actualTokens[i])
+        percentagesArray[i] = tokenPercentage
+    }
+
+    res.json({ actualTokens, percentagesArray })
 })
 
 app.listen(port, () => console.log(`Server listening on port: ${port}`))
