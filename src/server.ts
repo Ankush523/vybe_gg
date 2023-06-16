@@ -65,8 +65,8 @@ app.get('/api/fetch/tokenBalance', async (req, res) => {
 })
 
 app.get('/api/fetch/transactions', async (req, res) => {
-    const { chainId, address } = req.query as { chainId: string, address: string }
-    const transactions = await getUserTransactions(address, chainId)
+    const { chainName, address } = req.query as { chainName: string, address: string }
+    const transactions = await getUserTransactions(address, chainName)
     res.json(transactions)
 })
 
