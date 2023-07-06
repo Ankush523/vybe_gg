@@ -1,12 +1,14 @@
 import { config } from 'dotenv'
+import fetch from 'cross-fetch';
 
 config()
 
 const apiKey = process.env.COVALENT_API_KEY as string
 
 const getHistoricalPortfolio = async (chainName: string, walletAddress: string): Promise<any> => {
-    let headers = new Headers()
-    headers.set('Authorization', `Bearer ${apiKey}`)
+    const headers = {
+        'Authorization': `Bearer ${apiKey}`,
+    };
 
     let url = `https://api.covalenthq.com/v1/${chainName}/address/${walletAddress}/portfolio_v2/`
     try {
@@ -18,6 +20,6 @@ const getHistoricalPortfolio = async (chainName: string, walletAddress: string):
     catch(err){
         console.log(`Error fetching transaction history`)
     }
-}
+};
 
-export { getHistoricalPortfolio }
+export { getHistoricalPortfolio };

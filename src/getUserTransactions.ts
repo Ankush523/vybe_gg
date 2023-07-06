@@ -1,15 +1,20 @@
 import { config } from 'dotenv'
+import fetch from 'cross-fetch';
 config()
 
 const apiKey = process.env.COVALENT_API_KEY as string
 
 const getUserTransactions = async (userAddress: string, chainId: string): Promise<any> => {
-    let headers = new Headers()
-    headers.set('Authorization', `Bearer ${apiKey}`)
+    
+    const headers = {
+        'Authorization': `Bearer ${apiKey}`,
+    };
+
     let url = `https://api.covalenthq.com/v1/${chainId}/address/${userAddress}/transactions_v3/`
     try {
         const response = await fetch(url, { method: 'GET', headers })
         const data = await response.json()
+        console.log(data)
         return data
     } catch (error) {
         console.error(`Error: ${error}`)
