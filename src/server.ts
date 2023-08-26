@@ -70,4 +70,8 @@ app.get('/api/fetch/transactions', async (req:any, res:any) => {
     res.json(transactions)
 })
 
+app.get('/api', async (req:any, res:any) => {
+    res.send('Hello World!')
+})
+
 app.listen(port, () => console.log(`Server listening on port: ${port}`))
