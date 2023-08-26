@@ -14,7 +14,7 @@ const app = express()
 app.use(express.json())
 app.use(cors())
 
-app.get('/api/fetch/portfolio', async (req, res) => {
+app.get('/api/fetch/portfolio', async (req:any, res:any) => {
     // fetch the user's portfolio from the db
     const { chainName, address } = req.query as { chainName: string, address: string }
     const portfolio = await getHistoricalPortfolio(chainName, address)
@@ -33,13 +33,13 @@ app.get('/api/fetch/portfolio', async (req, res) => {
     res.json(dailyBalances)
 })
 
-app.get('/api/fetch/nftBalance', async (req, res) => {
+app.get('/api/fetch/nftBalance', async (req:any, res:any) => {
     const { chainName, address } = req.query as { chainName: string, address: string }
     const nftBalance = await getNftBalances(chainName, address)
     res.json(nftBalance)
 })
 
-app.get('/api/fetch/tokenBalance', async (req, res) => {
+app.get('/api/fetch/tokenBalance', async (req:any, res:any) => {
     const { chainName, address } = req.query as { chainName: string, address: string }
     const tokenBalances = await getTokenBalances(chainName, address)
     const actualTokens = tokenBalances.data.items.filter((token: any) => token.type == 'cryptocurrency')
@@ -64,7 +64,7 @@ app.get('/api/fetch/tokenBalance', async (req, res) => {
     res.json({ actualTokens, percentagesArray })
 })
 
-app.get('/api/fetch/transactions', async (req, res) => {
+app.get('/api/fetch/transactions', async (req:any, res:any) => {
     const { chainName, address } = req.query as { chainName: string, address: string }
     const transactions = await getUserTransactions(address, chainName)
     res.json(transactions)
