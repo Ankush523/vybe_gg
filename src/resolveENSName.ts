@@ -13,5 +13,3 @@ export async function resolveENSName(ensName : string) {
     console.error('Error:', error);
   }
 }
-
-// resolveENSName('0xankush.eth');
