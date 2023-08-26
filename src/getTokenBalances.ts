@@ -2,7 +2,7 @@ import { config } from 'dotenv'
 import fetch from 'cross-fetch';
 config()
 
-const apiKey = process.env.COVALENT_API_KEY as string
+const apiKey = 'cqt_rQq4KTPW7KFmXcYTXpyhxjRrvRM8'
 
 const getTokenBalances = async (chainName: string, walletAddress: string) => {
     const headers = {
